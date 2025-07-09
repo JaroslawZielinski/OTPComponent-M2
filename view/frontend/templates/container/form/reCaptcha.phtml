@@ -1,0 +1,55 @@
+<?php
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form\ReCaptcha $block */
+    /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+    $formId = $block->getFormId();
+    $isSubmit = !!$block->getIsSubmit();
+    $submitLabel = $block->getSubmitLabel();
+    $htmlTitle = $block->getHtmlTitle() ?? null;
+    $htmlName = $block->getHtmlName() ?? null;
+    $oldHtmlClass = $block->getClass() ?? null;
+    $id = $block->getId();
+    $siteKey = /* @noEscape */ $block->getSiteKey();
+    $htmlId = sprintf('%s-submit', $formId);
+    $htmlIdValue = str_replace(['"', 'id='], ['', ''], $htmlId);
+    $htmlClass = $block->getHtmlClass($oldHtmlClass);
+    $url = $block->getApiUrlWithCallback('onloadCallback' . $id);
+?>
+
+<?= /* @noEscape */ $secureRenderer
+    ->renderTag('script', ['src' => $url, 'async' => 'async', 'defer' => 'defer']); ?>
+
+<script type="text/javascript">
+    var onloadCallback<?= $id ?> = function() {
+        const optWidgetId = grecaptcha.render('<?= $htmlIdValue; ?>', {
+            sitekey: '<?= $siteKey; ?>',
+            size: 'invisible'
+        });
+        grecaptcha.ready(function () {
+            window.reCaptchaIds['<?= $formId; ?>'] = optWidgetId;
+        });
+    };
+    function recaptchaCallback<?= $id; ?>(gResponse) {
+        require(['jquery',], function ($) { $('#<?= $formId; ?>').submit(); });
+    }
+</script>
+<?php
+    $buttonOptions = [
+        'id' => $htmlId,
+        'class' => $htmlClass,
+        'aria-label' => $submitLabel,
+        'data-sitekey' => $siteKey,
+        'data-callback' => 'recaptchaCallback' . $id
+    ];
+    if ($isSubmit) {
+        $buttonOptions['type'] = 'submit';
+    }
+    if ($htmlTitle) {
+        $buttonOptions['title'] = $htmlTitle;
+    }
+    if ($htmlName) {
+        $buttonOptions['name'] = $htmlName;
+    }
+?>
+<button <?php foreach ($buttonOptions as $name => $value) : ?><?= $name; ?>="<?= $value; ?>" <?php endforeach; ?>>
+    <?= $submitLabel?>
+</button>

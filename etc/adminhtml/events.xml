@@ -1,0 +1,12 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="otpcomponent_controller_validation">
+        <observer name="adminhtml_otpcomponent_validator"
+            instance="JaroslawZielinski\OTPComponent\Observer\Adminhtml\Validation"/>
+    </event>
+
+    <event name="otpcomponent_controller_authenticated">
+        <observer name="adminhtml_otpcomponent_action_hook"
+            instance="JaroslawZielinski\OTPComponent\Observer\Adminhtml\Action"/>
+    </event>
+</config>

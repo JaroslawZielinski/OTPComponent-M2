@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="JaroslawZielinski_OTPComponent::css/container/form.css"/>
+    </head>
+
+    <body>
+        <referenceContainer name="after.body.start">
+            <block ifconfig="jaroslawzielinski_otpcomponent/reCaptcha/enable" name="recaptcha.init"
+                class="Magento\Framework\View\Element\Text" after="-">
+                <arguments>
+                    <argument translate="true" name="text" xsi:type="string"><![CDATA[
+<script>
+    window.reCaptchaIds = window.reCaptchaIds || {};
+</script>
+]]></argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

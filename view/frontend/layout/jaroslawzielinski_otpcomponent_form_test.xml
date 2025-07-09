@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="JaroslawZielinski\OTPComponent\Block\Container" name="otp-form-container"
+                as="otp-form-container">
+                <arguments>
+                    <argument name="form_id" xsi:type="string">otp-form</argument>
+                </arguments>
+
+                <block class="JaroslawZielinski\OTPComponent\Block\Container\Form" name="otp-form" as="otp-form">
+                    <arguments>
+                        <argument name="form_id" xsi:type="string">otp-form</argument>
+
+                        <argument name="otp" xsi:type="string" />
+
+                        <argument name="disable_fields" xsi:type="boolean">0</argument>
+
+                        <argument name="show_codes" xsi:type="boolean">0</argument>
+
+                        <argument name="submit_url" xsi:type="string">/otpcomponent/form_otp/preprocess</argument>
+                    </arguments>
+
+                    <block class="JaroslawZielinski\OTPComponent\Block\Container\Form\HiddenExtraFields"
+                        name="hidden_extra_fields" as="hidden_extra_fields">
+                        <arguments>
+                            <argument name="fields" xsi:type="array">
+                                <item name="dob" xsi:type="string">dob</item>
+                            </argument>
+                        </arguments>
+                    </block>
+
+                    <block class="JaroslawZielinski\OTPComponent\Block\Container\Form\ExtraFields" name="extra_fields"
+                        as="extra_fields" />
+
+                    <block class="JaroslawZielinski\OTPComponent\Block\Container\Form\Otp" name="otp_widget"
+                        as="otp_widget">
+                        <arguments>
+                            <argument name="config" xsi:type="array">
+                                <item name="name" xsi:type="string">otp6_value</item>
+
+                                <item name="initialValue" xsi:type="string"/>
+                            </argument>
+
+                            <argument name="view_model" xsi:type="object">JaroslawZielinski\OTPComponent\ViewModel\Otp</argument>
+                        </arguments>
+                    </block>
+
+                    <block ifconfig="jaroslawzielinski_otpcomponent/reCaptcha/enable" name="recaptcha.v2.invisible"
+                        as="recaptcha.v2.invisible"
+                        class="JaroslawZielinski\OTPComponent\Block\Container\Form\ReCaptcha">
+                        <arguments>
+                            <argument name="form_id" xsi:type="string">otp-form</argument>
+
+                            <argument name="class" xsi:type="string">otp-form-submit</argument>
+
+                            <argument name="is_submit" xsi:type="string">1</argument>
+
+                            <argument translate="true" name="submit_label" xsi:type="string">Send</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

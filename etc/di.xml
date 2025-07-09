@@ -1,0 +1,73 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Logger DI -->
+    <virtualType name="JaroslawZielinski\OTPComponent\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">var/log/jaroslawzielinski_otpcomponent.log</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="JaroslawZielinski\OTPComponent\Logger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="debug" xsi:type="object">JaroslawZielinski\OTPComponent\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="JaroslawZielinski\OTPComponent\Model\ReCaptcha">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\OTPComponent\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\OTPComponent\Model\EmailFacade">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\OTPComponent\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\OTPComponent\Observer\Action">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\OTPComponent\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\OTPComponent\Observer\Adminhtml\Action">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\OTPComponent\Logger</argument>
+        </arguments>
+    </type>
+
+    <!-- CRUD preferences -->
+    <preference for="JaroslawZielinski\OTPComponent\Api\Data\UserInterface"
+        type="JaroslawZielinski\OTPComponent\Model\Data\User"/>
+
+    <preference for="JaroslawZielinski\OTPComponent\Api\UserRepositoryInterface"
+        type="JaroslawZielinski\OTPComponent\Model\UserRepository"/>
+
+    <!-- Search preferences -->
+    <preference for="JaroslawZielinski\OTPComponent\Api\Data\UserSearchResultsInterface"
+        type="Magento\Framework\Api\SearchResults"/>
+
+    <!-- Users Grid -->
+    <virtualType name="JaroslawZielinski\OTPComponent\Model\ResourceModel\User\Grid\Collection"
+        type="JaroslawZielinski\OTPComponent\Ui\DataProvider\User\Listing\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">otpc_users</argument>
+
+            <argument name="resourceModel" xsi:type="string">JaroslawZielinski\OTPComponent\Model\ResourceModel\User</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- All grids DataProviders -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="jaroslawzielinski_otpcomponent_users_listing_data_source" xsi:type="string">
+                    JaroslawZielinski\OTPComponent\Model\ResourceModel\User\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

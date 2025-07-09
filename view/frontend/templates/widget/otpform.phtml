@@ -1,0 +1,8 @@
+<?php
+    /** @var \JaroslawZielinski\OTPComponent\Block\Widget\OTPForm $block */
+    $htmlId = $block->getHtmlId();
+    $otp = $block->getOtp() ?? '';
+    /** @var \Magento\Framework\View\Element\Template $container */
+    $container = $block->getContainer($htmlId, $otp);
+?>
+<?= $container->toHtml(); ?>

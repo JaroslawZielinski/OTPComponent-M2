@@ -1,0 +1,33 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="JaroslawZielinski\OTPComponent\Block\Container\Form\ExtraFields"
+        type="JaroslawZielinski\OTPComponent\Block\Container\Form\Fields">
+        <arguments>
+            <argument name="template" xsi:type="string">JaroslawZielinski_OTPComponent::container/form/extrafields.phtml</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="JaroslawZielinski\OTPComponent\Block\Container\Form\HiddenExtraFields"
+        type="JaroslawZielinski\OTPComponent\Block\Container\Form\Fields">
+        <arguments>
+            <argument name="template" xsi:type="string">JaroslawZielinski_OTPComponent::container/form/hiddenextrafields.phtml</argument>
+
+            <argument name="data" xsi:type="array">
+                <item name="fields" xsi:type="array">
+                    <item name="dob" xsi:type="string">dob</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="JaroslawZielinski\OTPComponent\Plugin\Model\FormFactoryPlugin">
+        <arguments>
+            <argument name="hiddenExtraFields" xsi:type="object">JaroslawZielinski\OTPComponent\Block\Container\Form\HiddenExtraFields</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\OTPComponent\Model\FormFactory">
+        <plugin name="extra-fields-otp-form-plugin"
+            type="JaroslawZielinski\OTPComponent\Plugin\Model\FormFactoryPlugin" sortOrder="10" disabled="false" />
+    </type>
+</config>
