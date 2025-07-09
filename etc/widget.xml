@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="JaroslawZielinski\OTPComponent\Block\Widget\OTPForm" id="otpcomponent_widget_otpform">
+        <label>Jaroslaw Zielinski OTPComponent Widget Form</label>
+
+        <description>OTP Widget Form </description>
+
+        <parameters>
+            <parameter name="html_id" xsi:type="text" sort_order="10">
+                <label translate="true">Html ID</label>
+                <value>otp-form</value>
+            </parameter>
+
+            <parameter name="otp" xsi:type="block" required="true" visible="true" sort_order="20">
+                <label translate="true">OTP</label>
+
+                <block class="JaroslawZielinski\OTPComponent\Block\Adminhtml\Widget\Form\OtpObject">
+                    <data>
+                        <item name="html_id" xsi:type="string">otp_widget</item>
+
+                        <item name="config" xsi:type="array">
+                            <item name="initialValue" xsi:type="string"/>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

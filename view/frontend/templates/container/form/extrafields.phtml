@@ -1,0 +1,37 @@
+<?php
+    /** @var \Magento\Framework\View\Element\Template $block */
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form $parentBlock */
+    $parentBlock = $block->getParentBlock();
+    $formId = $parentBlock->getFormId();
+    $isDisabledFields = $parentBlock->getDisableFields();
+    $format = \JaroslawZielinski\OTPComponent\Observer\Validation::JS_DATE_FORMAT;
+?>
+<div class="row">
+    <div class="col-24 col-sm-24">
+        <div class="subrow">
+            <label for="dob-<?= $formId; ?>"><?= __('Date of Birth'); ?></label>
+            <input type="text" class="dob-date" id="dob-<?= $formId; ?>" name="dob"
+                placeholder="<?= __('Select your birth date'); ?>" readonly
+                <?php if ($isDisabledFields):?>disabled<?php endif; ?> value="<?= $parentBlock->getDob(); ?>"
+                <?= $parentBlock->getRequired(); ?>>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/translate',
+        'jquery/ui'
+    ], function ($, $t) {
+        $(document).ready(function() {
+            $('#dob-<?= $formId; ?>').datepicker({
+                dateFormat: '<?= $format; ?>',
+                maxDate: 0, // Prevent future dates
+                yearRange: '1900:c+0', // Years from 1900 to current year
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: false
+            });
+        });
+    });
+</script>

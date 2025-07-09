@@ -1,0 +1,32 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <jaroslawzielinski_otpcomponent>
+            <settings>
+                <enable>1</enable>
+
+                <menu_enabled>0</menu_enabled>
+            </settings>
+
+            <otp_form_configuration>
+                <name_enabled>1</name_enabled>
+
+                <name_required>1</name_required>
+
+                <surname_enabled>1</surname_enabled>
+
+                <surname_required>0</surname_required>
+            </otp_form_configuration>
+
+            <reCaptcha>
+                <enable>0</enable>
+            </reCaptcha>
+
+            <emails>
+                <name><![CDATA[Jarosław Zieliński]]></name>
+
+                <email><![CDATA[jarek.zielinski82@gmail.com]]></email>
+            </emails>
+        </jaroslawzielinski_otpcomponent>
+    </default>
+</config>

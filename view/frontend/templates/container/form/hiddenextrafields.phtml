@@ -1,0 +1,9 @@
+<?php
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form\Fields $block */
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form $parentBlock */
+    $parentBlock = $block->getParentBlock();
+    $fields = $block->getFields();
+?>
+<?php foreach ($fields as $name => $field): ?>
+    <input name="<?= $name; ?>" type="hidden" value="<?= $parentBlock->getData($field) ?? ''; ?>" />
+<?php endforeach; ?>

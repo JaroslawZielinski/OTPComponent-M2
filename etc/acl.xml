@@ -1,0 +1,33 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="JaroslawZielinski_OTPComponent::menu" title="OTP Component">
+                    <resource id="JaroslawZielinski_OTPComponent::frontend" title="OTP Component Frontend">
+                        <resource id="JaroslawZielinski_OTPComponent::testFrontend" title="Frontend Make Test" />
+                    </resource>
+
+                    <resource id="JaroslawZielinski_OTPComponent::backend" title="OTP Component Backend">
+                        <resource id="JaroslawZielinski_OTPComponent::testBackend" title="Backend Make Test"/>
+                    </resource>
+
+                    <resource id="JaroslawZielinski_OTPComponent::grid" title="OTP Component User Grid">
+                        <resource id="JaroslawZielinski_OTPComponent::users" title="Users"/>
+                    </resource>
+
+                    <resource id="JaroslawZielinski_OTPComponent::config" title="OTP Component Configuration" />
+                </resource>
+
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="JaroslawZielinski_OTPComponent::configuration" title="OTP Component Configuration"
+                                translate="title" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

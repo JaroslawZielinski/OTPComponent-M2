@@ -1,0 +1,10 @@
+<?php
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container $block */
+    $formId = $block->getFormId();
+?>
+<div id="message-<?= $formId; ?>" class="message-otp-form" style="display: none;">
+</div>
+<br />
+<div id="parent-<?= $formId; ?>" class="parent-otp-form">
+    <?= $block->getChildHtml(); ?>
+</div>

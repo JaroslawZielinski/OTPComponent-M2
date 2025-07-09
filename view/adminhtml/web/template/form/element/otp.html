@@ -1,0 +1,60 @@
+<div class="admin__field _required _disabled" data-bind="
+    css: $data.additionalClasses,
+    attr: {'data-index': index},
+    visible: visible">
+    <div class="admin__field-label" data-bind="visible: $data.labelVisible">
+        <!-- ko if: $data.label -->
+        <label data-bind="attr: {for: uid}">
+            <span data-bind="attr: {'data-config-scope': $data.scopeLabel}, i18n: label"></span>
+        </label>
+        <!-- /ko -->
+    </div>
+
+    <div class="admin__field-control" data-bind="afterRender: afterRender">
+        <div class="otp-container">
+            <h2 data-bind="i18n: 'Enter 6-Digit OTP' "></h2>
+            <div class="otp-inputs">
+                <!-- ko foreach: { data: new Array(6), as: 'digit' } -->
+                <input type="text" data-bind="
+                   value: $parent.otpValues()[$index()],
+                   event: {
+                       input: $parent.onDigitChange.bind($parent, $index()),
+                       keydown: $parent.onKeyDown.bind($parent, $index()),
+                       paste: $parent.onPaste.bind($parent, $index()),
+                       focus: $parent.onFocus.bind($parent, $index())
+                   },
+                   attr: {
+                       'class': $parent.getInputClasses($index()),
+                       'data-otp-index': $index(),
+                       'maxlength': 1,
+                       'autocomplete': 'off',
+                       'inputmode': 'numeric',
+                       'pattern': '[0-9]*',
+                       'aria-label': 'Digit ' + ($index() + 1),
+                       'disabled': $parent.disabled
+                   }
+                " />
+                <!-- /ko -->
+                <span data-bind="attr: { class: $data.getCheckMarkClasses() }"></span>
+            </div>
+        </div>
+
+        <!-- Hidden input for form submission -->
+        <input type="hidden" data-bind="
+           value: value,
+           attr: {
+               name: inputName,
+               id: uid,
+               'data-form-part': dataScope
+           }
+           " />
+
+        <!-- ko if: $data.notice -->
+        <span class="admin__field-notice" data-bind="i18n: $data.notice"></span>
+        <!-- /ko -->
+
+        <!-- ko if: error -->
+        <label class="admin__field-error" data-bind="attr: {for: uid}, text: error"></label>
+        <!-- /ko -->
+    </div>
+</div>

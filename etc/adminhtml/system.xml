@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="otpcomponent" sortOrder="20" translate="label" class="otpcomponent-main">
+            <label>OTP</label>
+        </tab>
+
+        <section id="jaroslawzielinski_otpcomponent" translate="label" sortOrder="20" showInDefault="1" showInStore="1"
+            showInWebsite="1">
+
+            <class>separator-top</class>
+
+            <label>OTP Component</label>
+
+            <tab>otpcomponent</tab>
+
+            <resource>JaroslawZielinski_OTPComponent::configuration</resource>
+
+            <group id="settings" translate="label comment" type="text" sortOrder="10" showInDefault="1"
+                showInStore="1" showInWebsite="1">
+                <label>Settings</label>
+
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                    showInStore="1">
+                    <label>Enable</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="menu_enabled" translate="label" type="select" sortOrder="20" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Menu enabled</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <attribute type="expanded">1</attribute>
+            </group>
+
+            <group id="otp_form_configuration" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                showInStore="1" showInWebsite="1">
+                <label>OTP Form Configuration</label>
+
+                <field id="name_enabled" translate="label" type="select" sortOrder="10" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Name enabled</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+
+                    <comment><![CDATA[In the form with OTP field.]]></comment>
+                </field>
+
+                <field id="name_required" translate="label" type="select" sortOrder="20" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Name required</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+
+                    <comment><![CDATA[In the form with OTP field.]]></comment>
+
+                    <depends>
+                        <field id="name_enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="surname_enabled" translate="label" type="select" sortOrder="30" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Surname enabled</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+
+                    <comment><![CDATA[In the form with OTP field.]]></comment>
+                </field>
+
+                <field id="surname_required" translate="label" type="select" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Surname required</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+
+                    <comment><![CDATA[In the form with OTP field.]]></comment>
+
+                    <depends>
+                        <field id="surname_enabled">1</field>
+                    </depends>
+                </field>
+
+                <depends>
+                    <field id="jaroslawzielinski_otpcomponent/settings/enable">1</field>
+                </depends>
+
+                <attribute type="expanded">1</attribute>
+            </group>
+
+            <group id="reCaptcha" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInStore="1"
+                showInWebsite="1">
+                <label>reCaptcha</label>
+
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                    showInStore="1">
+                    <label>Enable</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+
+                    <comment><![CDATA[reCaptcha V2 invisible enabled.]]></comment>
+                </field>
+
+                <field id="sitekey" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Site Key</label>
+
+                    <comment><![CDATA[Use this <strong>site key</strong> in the HTML code your site serves to users.]]></comment>
+
+                    <validate>required-entry</validate>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="secretkey" translate="label comment" type="obscure" sortOrder="30" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Secret Key</label>
+
+                    <comment><![CDATA[Use this <strong>secret key</strong> for communication between your site and reCAPTCHA.]]></comment>
+
+                    <validate>required-entry</validate>
+
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <depends>
+                    <field id="jaroslawzielinski_otpcomponent/settings/enable">1</field>
+                </depends>
+
+                <attribute type="expanded">1</attribute>
+            </group>
+
+            <group id="emails" translate="label comment" sortOrder="40" showInDefault="1" showInWebsite="1"
+                showInStore="1">
+                <label>Sending Email</label>
+
+                <field id="name" translate="label comment" type="text" sortOrder="10" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Sender Name</label>
+
+                    <backend_model>Magento\Config\Model\Config\Backend\Email\Sender</backend_model>
+
+                    <validate>validate-emailSender</validate>
+                </field>
+
+                <field id="email" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Sender Email</label>
+
+                    <backend_model>Magento\Config\Model\Config\Backend\Email\Address</backend_model>
+
+                    <validate>validate-email</validate>
+                </field>
+
+                <field id="email_template" translate="label comment" type="select" sortOrder="30" showInDefault="1">
+                    <label>Email Template for OTP</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+
+                <depends>
+                    <field id="jaroslawzielinski_otpcomponent/settings/enable">1</field>
+                </depends>
+
+                <attribute type="expanded">1</attribute>
+            </group>
+        </section>
+    </system>
+</config>

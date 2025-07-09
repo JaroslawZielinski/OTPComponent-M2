@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="JaroslawZielinski_OTPComponent::menu" resource="JaroslawZielinski_OTPComponent::menu" title="OTP"
+            module="JaroslawZielinski_OTPComponent" sortOrder="10"/>
+
+        <add id="JaroslawZielinski_OTPComponent::frontend"  resource="JaroslawZielinski_OTPComponent::frontend"
+             title="Frontend" translate="title" module="JaroslawZielinski_OTPComponent"
+             parent="JaroslawZielinski_OTPComponent::menu" sortOrder="10"/>
+
+        <add id="JaroslawZielinski_OTPComponent::testFrontend"
+             resource="JaroslawZielinski_OTPComponent::testFrontend" title="Frontend Form Example"
+             action="otpcomponent/form/test" module="JaroslawZielinski_OTPComponent" sortOrder="10"
+             parent="JaroslawZielinski_OTPComponent::frontend" target="_blank"
+             dependsOnModule="JaroslawZielinski_OTPComponent"/>
+
+        <add id="JaroslawZielinski_OTPComponent::backend"  resource="JaroslawZielinski_OTPComponent::backend"
+             title="Backend" translate="title" module="JaroslawZielinski_OTPComponent"
+             parent="JaroslawZielinski_OTPComponent::menu" sortOrder="20"/>
+
+        <add id="JaroslawZielinski_OTPComponent::testBackend" resource="JaroslawZielinski_OTPComponent::testBackend"
+             title="Backend Form Example" action="jaroslawzielinski_otpcomponent/form/test"
+             module="JaroslawZielinski_OTPComponent" sortOrder="10" parent="JaroslawZielinski_OTPComponent::backend"
+             dependsOnModule="JaroslawZielinski_OTPComponent"/>
+
+        <add id="JaroslawZielinski_OTPComponent::grid"  resource="JaroslawZielinski_OTPComponent::grid"
+             title="Grid" translate="title" module="JaroslawZielinski_OTPComponent"
+             parent="JaroslawZielinski_OTPComponent::menu" sortOrder="30"/>
+
+        <add id="JaroslawZielinski_OTPComponent::users" resource="JaroslawZielinski_OTPComponent::users"
+             title="Users" action="jaroslawzielinski_otpcomponent/users/index"
+             module="JaroslawZielinski_OTPComponent" sortOrder="10" parent="JaroslawZielinski_OTPComponent::grid"
+             dependsOnModule="JaroslawZielinski_OTPComponent"/>
+
+        <add id="JaroslawZielinski_OTPComponent::config"  resource="JaroslawZielinski_OTPComponent::config"
+             title="Configuration" translate="title" module="JaroslawZielinski_OTPComponent"
+             parent="JaroslawZielinski_OTPComponent::menu" sortOrder="40"/>
+
+        <add id="JaroslawZielinski_OTPComponent::configuration" resource="JaroslawZielinski_OTPComponent::configuration"
+             title="Configuration" action="adminhtml/system_config/edit/section/jaroslawzielinski_otpcomponent"
+             module="JaroslawZielinski_OTPComponent" sortOrder="20" parent="JaroslawZielinski_OTPComponent::config"
+             dependsOnModule="JaroslawZielinski_OTPComponent"/>
+    </menu>
+</config>

@@ -1,0 +1,24 @@
+<?php
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form\Otp $block */
+    /** @var \JaroslawZielinski\OTPComponent\ViewModel\Otp $viewModel */
+    $viewModel = $block->getViewModel();
+    $configuration = $block->getConfig();
+    $name = $configuration['name'];
+    $crcCode = $block->getCrcC() ?? '';
+?>
+<div class="otp-container" data-mage-init='{"otpWidget":
+    <?=  /* @noEscape */ $viewModel->arrayToJson($configuration); ?>}'>
+    <h2><?= __('Enter 6-Digit OTP'); ?></h2>
+    <div class="otp-inputs">
+        <?php for ($i = 1; $i <= 6; ++$i): ?>
+            <input type="text" class="otp-field otp-field-<?= $i; ?>" maxlength="1"
+                autocomplete="off" />
+        <?php endfor; ?>
+        <span class="checkmark hide-me"></span>
+        <label>
+            <input style="visibility: hidden; width: 0; height: 0; font-size: 0" name="<?=  $name; ?>" type="text"
+                class="input-text otp-6digits" autocomplete="off" value="" />
+            <input type="hidden" name="crc_c" value="<?= $crcCode; ?>"/>
+        </label>
+    </div>
+</div>

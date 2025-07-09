@@ -1,0 +1,183 @@
+<?php
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form $block */
+    use JaroslawZielinski\OTPComponent\Block\Container\Form;
+    use JaroslawZielinski\OTPComponent\Block\Container\Form\ReCaptcha;
+    use JaroslawZielinski\OTPComponent\Controller\Form\Otp;
+    $formId = $block->getFormId();
+    $otp = $block->getOtp() ?? '';
+    $nameEnabled = $block->isNameEnabled();
+    $nameRequired = $block->isNameRequired();
+    $surnameEnabled = $block->isSurnameEnabled();
+    $surnameRequired = $block->isSurnameRequired();
+    $isDisabledFields = $block->getDisableFields();
+    /** @var ReCaptcha $recaptchaHtmlBlock */
+    $recaptchaHtmlBlock = $block->getChildBlock('recaptcha.v2.invisible') ?? null;
+    $submitUrl = $block->getSubmitUrl();
+?>
+<form id="<?= $formId; ?>" class="otp-form" method="POST" action="#" novalidate>
+    <fieldset>
+        <div class="container" style="width:100%;">
+            <div class="row">
+                <div class="col-24 col-sm-24">
+                    <input name="form_key" type="hidden" value="<?= $block->getFormKey(); ?>">
+                    <input name="name" type="hidden" value="<?= $block->getName(); ?>" />
+                    <input name="surname" type="hidden" value="<?= $block->getSurname(); ?>" />
+                    <input name="email" type="hidden" value="<?= $block->getEmail(); ?>" />
+                    <input name="form_id" type="hidden" value="<?= $formId; ?>" />
+                    <input name="otp" type="hidden" value="<?= $otp; ?>" />
+                    <?= $block->getChildHtml('hidden_extra_fields'); ?>
+                </div>
+            </div>
+            <?php if ($nameEnabled && $surnameEnabled): ?>
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <div class="subrow">
+                            <label for="name"><?= __('Name'); ?></label>
+                            <input autocomplete="off" id="name" class="input-text" name="name" placeholder="<?= __('First name'); ?>" type="text"
+                                value="<?= $block->getName(); ?>" <?= $block->getRequired($nameRequired); ?>
+                                <?php if ($isDisabledFields):?>disabled<?php endif; ?>>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12">
+                        <div class="subrow">
+                            <label for="surname"><?= __('Surname'); ?></label>
+                            <input autocomplete="off" id="surname" class="input-text" name="surname" placeholder="<?= __('Last name'); ?>" type="text"
+                                value="<?= $block->getSurname(); ?>" <?= $block->getRequired($surnameRequired); ?>
+                                   <?php if ($isDisabledFields):?>disabled<?php endif; ?>>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
+                <?php if ($nameEnabled): ?>
+                    <div class="row">
+                        <div class="col-24 col-sm-24">
+                            <div class="subrow">
+                                <label for="name"><?= __('Name'); ?></label>
+                                <input autocomplete="off" id="name" class="input-text" name="name"
+                                    placeholder="<?= __('First name'); ?>" type="text"
+                                    value="<?= $block->getName(); ?>" <?= $block->getRequired($nameRequired); ?>
+                                    <?php if ($isDisabledFields):?>disabled<?php endif; ?>>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <?php if ($surnameEnabled): ?>
+                    <div class="row">
+                        <div class="col-24 col-sm-24">
+                            <div class="subrow">
+                                <label for="surname"><?= __('Surname'); ?></label>
+                                <input autocomplete="off" id="surname" class="input-text" name="surname"
+                                    placeholder="<?= __('Last name'); ?>" type="text"
+                                    value="<?= $block->getSurname(); ?>" <?= $block->getRequired($surnameRequired); ?>
+                                    <?php if ($isDisabledFields):?>disabled<?php endif; ?>>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <div class="row">
+                <div class="col-24 col-sm-24">
+                    <div class="subrow">
+                        <label for="email"><?= __('E-Mail'); ?></label>
+                        <input autocomplete="off" id="email" name="email" class="input-text" placeholder="<?= __('E-mail'); ?>" type="email"
+                            value="<?= $block->getEmail(); ?>" <?= $block->getRequiredEmail(); ?>
+                            <?php if ($isDisabledFields):?>disabled<?php endif; ?>>
+                    </div>
+                </div>
+            </div>
+
+            <?= $block->getChildHtml('extra_fields'); ?>
+
+            <?php if ($block->getShowCodes()): ?>
+                <div class="row">
+                    <div class="col-24 col-sm-24">
+                        <p><?= __('Please enter code that you received in your email.'); ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-24 col-sm-24">
+                        <?= $block->getChildHtml('otp_widget'); ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <div class="row">
+                <div class="col-24 col-sm-24">
+                    <img id="<?= $formId; ?>-loader" class="simpleform-loader"
+                        src="<?= $block->getViewFileUrl('images/loader-1.gif'); ?>" alt="Loader" hidden>
+                    <?php if (!empty($recaptchaHtmlBlock)): ?>
+                        <?= $recaptchaHtmlBlock->toHtml(); ?>
+                    <?php else: ?>
+                        <button id="<?= $formId; ?>-submit" class="otp-form-submit" type="submit"><?= __('Save'); ?></button>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<script type="text/x-magento-init">
+    {
+        "#<?= $formId; ?>": {
+            "validation": {},
+            "otpValidateMethod": {}
+        }
+    }
+</script>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/translate',
+        'underscore',
+        'otpForms',
+        'otpFormsUtils',
+        'prototype',
+        'mage/validation'
+    ], function ($, $t, _, otpForms, otpFormsUtils) {
+        $(document).ready(function() {
+            $('#<?= $formId; ?>').on('submit', function (event) {
+                event.preventDefault();
+                const form = document.forms.namedItem('<?= $formId; ?>');
+                $(form).validation();
+                // Initialize button state
+                let isValid = $(form).validation('isValid');
+                if (isValid) {
+                    otpForms.showLoader('<?= $formId; ?>');
+                    const oData = new FormData(form);
+                    const oReq = new XMLHttpRequest();
+                    oReq.open('POST', '<?= $submitUrl; ?>', true);
+                    oReq.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                    oReq.onload = function(oEvent) {
+                        const STATUS_OK = '<?= Otp::STATUS_OK ?>';
+                        var response = JSON.parse(oReq.response);
+                        var messageText = response.message;
+                        var resultText = response.results;
+                        var status = response.status;
+                        if (STATUS_OK === status && 200 === oReq.status) {
+                            $('#parent-<?= $formId; ?>').html(resultText);
+                            otpFormsUtils.ajaxMagentoReinit('#parent-<?= $formId; ?>');
+                        }
+                        const messageTemplate = STATUS_OK === status
+                            ? '<div class="alert alert-success" role="alert"><%= message %></div>'
+                            : '<div class="alert alert-danger" role="alert"><%= message %></div>';
+                        const myMessage = _.template(messageTemplate)({message: messageText});
+                        $('#message-<?= $formId; ?>').hide();
+                        $('#message-<?= $formId; ?>').html(myMessage);
+                        otpForms.hideLoader('<?= $formId; ?>');
+                        $('#message-<?= $formId; ?>').show();
+                        if (!(STATUS_OK === status && 200 === oReq.status)) {
+                            otpForms.hideLoader('<?= $formId; ?>');
+                            <?php if (!empty($recaptchaHtmlBlock)): ?>
+                                <?= $recaptchaHtmlBlock->jsFailedReset($formId); ?>
+                            <?php endif; ?>
+                        }
+                    };
+                    oReq.send(oData);
+                } else {
+                    <?php if (!empty($recaptchaHtmlBlock)): ?>
+                        <?= $recaptchaHtmlBlock->jsFailedReset($formId); ?>
+                    <?php endif; ?>
+                }
+            });
+        });
+    });
+</script>

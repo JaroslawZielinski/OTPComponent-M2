@@ -1,0 +1,23 @@
+<!--@subject {{trans "This is Your One Time Password"}} @-->
+{{template config_path="design/email/header_template"}}
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+        <td align="center" valign="top" style="padding:20px 0 20px 0">
+            <table bgcolor="#FFFFFF" cellspacing="0" cellpadding="10" border="0" width="650" style="border:1px solid #E0E0E0;">
+                <tr>
+                    <td valign="top">
+                        <p>{{trans "Dear %name," name=$name}}</p>
+                        <p>{{trans "Your OTP number is here:"}}</p>
+                        <ul style="list-style-type: none;">
+                            <li><strong>{{trans "%codes" codes=$codes}}</strong></li>
+                        </ul>
+                        <p>{{trans "Copy it carefully to the form. Good day!"}}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}
