@@ -88,6 +88,10 @@ Use this code to implement OTP Component in your form:
 </block>
 ```
 
+![](docs/otp_front1.png)
+
+![](docs/otp_front2.png)
+
 ### CMS Page/Block/Widget Usages
 
 #### Admin Panel -> CONTENT -> Elements -> Pages
@@ -143,6 +147,10 @@ Use this code to implement OTP Component in your form:
 </field>
 ```
 
+![](docs/otp_backend1.png)
+
+![](docs/otp_backend2.png)
+
 ## Events
 
 ### Frontend Events
@@ -174,12 +182,12 @@ implementation of a dispatcher:
 ```php
 $this->eventManager->dispatch('otpcomponent_controller_authenticated', [
     'tuple' => $tuple,
-    'status' => &$status,
-    'message' => &$message,
+    'totals' => &$totals
 ]);
 ```
 
-where `$tuple` is user form data
+where `$tuple` is user form data,
+and `$totals` are array return in json response.
 
 **NOTE**: _Your custom action. In this example it is addition of new entry User in data base after success OTP authentication._
 
@@ -289,6 +297,21 @@ For example:
         });
     });
 </script>
+```
+
+### 3 Override Submit Script:
+
+#### 3.1 Submit Script in `view/frontend/layout/jaroslawzielinski_otpcomponent_form_test.xml`
+
+```xml
+<block class="JaroslawZielinski\OTPComponent\Block\Container\Form\SubmitScript" name="submit-script"
+    as="submit-script">
+    <arguments>
+        <argument name="form_id" xsi:type="string">otp-form</argument>
+
+        <argument name="recaptcha_block" xsi:type="string">recaptcha.v2.invisible</argument>
+    </arguments>
+</block>
 ```
 
 ## Browser Support

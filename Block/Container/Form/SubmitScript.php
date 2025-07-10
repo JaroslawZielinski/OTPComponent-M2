@@ -8,9 +8,10 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 
 /**
- * @method getFields(): array
+ * @method getFormId(): string
+ * @method getRecaptchaBlock(): string
  */
-class Fields extends Template
+class SubmitScript extends Template
 {
     /**
      * @var string
@@ -23,13 +24,16 @@ class Fields extends Template
     public function __construct(
         Context $context,
         array $data = [],
-        string $templatePath = '',
+        string $templatePath = 'JaroslawZielinski_OTPComponent::container/form/submitScript.phtml'
     ) {
         $this->templatePath = $templatePath;
         parent::__construct($context, $data);
     }
 
-    protected function _construct(): void
+    /**
+     * @inheritDoc
+     */
+    protected function _construct()
     {
         $this->setTemplate($this->templatePath);
         parent::_construct();

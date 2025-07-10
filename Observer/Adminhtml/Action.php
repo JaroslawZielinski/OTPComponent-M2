@@ -50,9 +50,10 @@ class Action implements ObserverInterface
     public function execute(Observer $observer): void
     {
         $event = $observer->getEvent();
-        /** @var Http $request */
         $tuple = $event->getTuple();
-        $message = $event->getMessage();
+        $totals = $event->getTotals();
+
+        $message = $totals['message'];
         $model = $this->userFactory->create();
         $data = array_intersect_key(
             $tuple,
@@ -69,7 +70,10 @@ class Action implements ObserverInterface
             $otp6Value,
             $modelData->getUserId()
         );
-        $this->logger->info('Backend action peformed!', ['message' => $newMessage]);
-        $event->setMessage($newMessage);
+        $newTotals = [
+            'message' => $newMessage,
+        ];
+        $this->logger->info('Backend action peformed!', ['totals' => $newTotals]);
+        $event->setTotals($newTotals);
     }
 }

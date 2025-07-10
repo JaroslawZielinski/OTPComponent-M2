@@ -15,6 +15,30 @@
         </arguments>
     </virtualType>
 
+    <type name="JaroslawZielinski\OTPComponent\Controller\Adminhtml\Form\Otp\Preprocess">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\OTPComponent\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\OTPComponent\Controller\Adminhtml\Form\Otp\Process">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\OTPComponent\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\OTPComponent\Controller\Form\Otp\Preprocess">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\OTPComponent\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\OTPComponent\Controller\Form\Otp\Process">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\OTPComponent\Logger</argument>
+        </arguments>
+    </type>
+
     <type name="JaroslawZielinski\OTPComponent\Model\ReCaptcha">
         <arguments>
             <argument name="logger" xsi:type="object">JaroslawZielinski\OTPComponent\Logger</argument>
