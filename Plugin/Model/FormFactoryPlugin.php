@@ -41,12 +41,13 @@ class FormFactoryPlugin
         LayoutInterface $layout,
         array $params = [],
         array $fields = [],
-        $withContainer = true
+        bool $withContainer = true,
+        bool $submitScript = false
     ): array {
         if ($this->isRouteAllowed()) {
-            $fields = $this->hiddenExtraFields->getFields();
+            $fields = array_merge($fields, $this->hiddenExtraFields->getFields());
         }
-        return [$layout, $params, $fields, $withContainer];
+        return [$layout, $params, $fields, $withContainer, $submitScript];
     }
 
     private function isRouteAllowed(): bool
