@@ -128,12 +128,11 @@ abstract class Otp extends Action
     /**
      * Action
      */
-    protected function processAuthenticatedEventDispatch(array $tuple, &$message, string &$status): void
+    protected function processAuthenticatedEventDispatch(array $tuple, array &$totals): void
     {
         $this->eventManager->dispatch('otpcomponent_controller_authenticated', [
             'tuple' => $tuple,
-            'status' => &$status,
-            'message' => &$message,
+            'totals' => &$totals
         ]);
     }
 }

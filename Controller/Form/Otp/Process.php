@@ -50,27 +50,35 @@ class Process extends Otp
             $formBlock = $this->formFactory->create(
                 $this->_view->getLayout(),
                 array_merge($params, $resetParams, [
-                    'submit_url' => '/otpcomponent/form_otp/preprocess',
+                    'submit_url' => $this->getSubmitUrl(),
                     'disable_fields' => false,
                     'show_codes' => false
                 ]),
                 [],
+                false,
                 false
             );
-            $status = self::STATUS_OK;
-            $message = __('Successfully processed.');
-            $this->processAuthenticatedEventDispatch($temporaryTuple, $message, $status);
-            $results = $formBlock->toHtml();
+            $totals = [
+                'status' => self::STATUS_OK,
+                'message' => __('Successfully processed.'),
+                'results' => $formBlock->toHtml()
+            ];
+            $this->processAuthenticatedEventDispatch($temporaryTuple, $totals);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), $e->getTrace());
-            $status = self::STATUS_FAILED;
-            $message = __('Error happened [%1]', $e->getMessage());
-            $results = '';
+            $totals = [
+                'status' => self::STATUS_FAILED,
+                'message' => __('Error happened [%1]', $e->getMessage()),
+                'results' => ''
+            ];
         }
-        return $this->executeJson([
-            'status' => $status,
-            'message' => $message,
-            'results' => $results
-        ]);
+        return $this->executeJson($totals);
+    }
+
+    /**
+     */
+    protected function getSubmitUrl(): string
+    {
+        return '/otpcomponent/form_otp/preprocess';
     }
 }

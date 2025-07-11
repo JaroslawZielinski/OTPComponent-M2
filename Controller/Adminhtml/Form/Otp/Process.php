@@ -43,9 +43,12 @@ class Process extends Otp
                 throw new LocalizedException(__('The OTP code does not match. Try again later.'));
             }
             $message = __('Successfully processed.');
-            $this->processAuthenticatedEventDispatch($data, $message);
+            $totals = [
+                'message' => $message
+            ];
+            $this->processAuthenticatedEventDispatch($data, $totals);
             $this->dataPersistor->clear(DataProvider::OTPFORM_USER);
-            $this->messageManager->addSuccessMessage($message);
+            $this->messageManager->addSuccessMessage($totals['message']);
         } catch (\Exception $e) {
             $message = $e->getMessage();
             $this->logger->error($message, $e->getTrace());
