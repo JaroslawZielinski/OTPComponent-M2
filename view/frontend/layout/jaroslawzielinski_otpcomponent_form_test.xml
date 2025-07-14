@@ -60,6 +60,15 @@
                             <argument translate="true" name="submit_label" xsi:type="string">Send</argument>
                         </arguments>
                     </block>
+
+                    <block class="JaroslawZielinski\OTPComponent\Block\Container\Form\SubmitScript" name="submit-script"
+                        as="submit-script">
+                        <arguments>
+                            <argument name="form_id" xsi:type="string">otp-form</argument>
+
+                            <argument name="recaptcha_block" xsi:type="string">recaptcha.v2.invisible</argument>
+                        </arguments>
+                    </block>
                 </block>
             </block>
         </referenceContainer>

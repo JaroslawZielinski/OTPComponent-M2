@@ -3,14 +3,14 @@
     <virtualType name="JaroslawZielinski\OTPComponent\Block\Container\Form\ExtraFields"
         type="JaroslawZielinski\OTPComponent\Block\Container\Form\Fields">
         <arguments>
-            <argument name="template" xsi:type="string">JaroslawZielinski_OTPComponent::container/form/extrafields.phtml</argument>
+            <argument name="templatePath" xsi:type="string">JaroslawZielinski_OTPComponent::container/form/extrafields.phtml</argument>
         </arguments>
     </virtualType>
 
     <virtualType name="JaroslawZielinski\OTPComponent\Block\Container\Form\HiddenExtraFields"
         type="JaroslawZielinski\OTPComponent\Block\Container\Form\Fields">
         <arguments>
-            <argument name="template" xsi:type="string">JaroslawZielinski_OTPComponent::container/form/hiddenextrafields.phtml</argument>
+            <argument name="templatePath" xsi:type="string">JaroslawZielinski_OTPComponent::container/form/hiddenextrafields.phtml</argument>
 
             <argument name="data" xsi:type="array">
                 <item name="fields" xsi:type="array">
@@ -27,6 +27,10 @@
     </type>
 
     <type name="JaroslawZielinski\OTPComponent\Model\FormFactory">
+        <arguments>
+            <argument name="extraFields" xsi:type="object">JaroslawZielinski\OTPComponent\Block\Container\Form\ExtraFields</argument>
+        </arguments>
+
         <plugin name="extra-fields-otp-form-plugin"
             type="JaroslawZielinski\OTPComponent\Plugin\Model\FormFactoryPlugin" sortOrder="10" disabled="false" />
     </type>

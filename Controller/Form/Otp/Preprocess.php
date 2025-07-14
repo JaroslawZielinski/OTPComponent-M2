@@ -94,26 +94,34 @@ class Preprocess extends Otp
             $formBlock = $this->formFactory->create(
                 $this->_view->getLayout(),
                 array_merge($params, [
-                    'submit_url' => '/otpcomponent/form_otp/process',
+                    'submit_url' => $this->getSubmitUrl(),
                     'disable_fields' => true,
                     'show_codes' => true
                 ]),
                 [],
-                false
+                false,
+                true
             );
-            $status = self::STATUS_OK;
-            $message = __('An email with OTP code has been sent.');
-            $results = $formBlock->toHtml();
+            $totals = [
+                'status' => self::STATUS_OK,
+                'message' => __('An email with OTP code has been sent.'),
+                'results' => $formBlock->toHtml()
+            ];
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), $e->getTrace());
-            $status = self::STATUS_FAILED;
-            $message = __('Error happened [%1]', $e->getMessage());
-            $results = '';
+            $totals = [
+                'status' => self::STATUS_FAILED,
+                'message' => __('Error happened [%1]', $e->getMessage()),
+                'results' => ''
+            ];
         }
-        return $this->executeJson([
-            'status' => $status,
-            'message' => $message,
-            'results' => $results
-        ]);
+        return $this->executeJson($totals);
+    }
+
+    /**
+     */
+    protected function getSubmitUrl(): string
+    {
+        return '/otpcomponent/form_otp/process';
     }
 }

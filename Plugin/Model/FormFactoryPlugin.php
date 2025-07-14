@@ -11,7 +11,7 @@ use JaroslawZielinski\OTPComponent\Model\FormFactory;
 
 class FormFactoryPlugin
 {
-    public const ALLOWED_ROUTES = [
+    private const ALLOWED_ROUTES = [
         'jaroslawzielinski_otpcomponent_form_otp_preprocess',
         'jaroslawzielinski_otpcomponent_form_otp_process'
     ];
@@ -41,14 +41,17 @@ class FormFactoryPlugin
         LayoutInterface $layout,
         array $params = [],
         array $fields = [],
-        $withContainer = true
+        bool $withContainer = true,
+        bool $submitScript = false
     ): array {
         if ($this->isRouteAllowed()) {
-            $fields = $this->hiddenExtraFields->getFields();
+            $fields = array_merge($fields, $this->hiddenExtraFields->getFields());
         }
-        return [$layout, $params, $fields, $withContainer];
+        return [$layout, $params, $fields, $withContainer, $submitScript];
     }
 
+    /**
+     */
     private function isRouteAllowed(): bool
     {
         $route = sprintf(
@@ -57,6 +60,14 @@ class FormFactoryPlugin
             $this->request->getControllerName(),
             $this->request->getActionName()
         );
-        return in_array($route, self::ALLOWED_ROUTES);
+        return in_array($route, $this->getAllowedRoutes());
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllowedRoutes(): array
+    {
+        return self::ALLOWED_ROUTES;
     }
 }
