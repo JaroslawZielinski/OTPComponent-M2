@@ -53,7 +53,6 @@ class Action implements ObserverInterface
         $event = $observer->getEvent();
         $tuple = $event->getTuple();
         $totals = $event->getTotals();
-
         $status = $totals['status'];
         $message = $totals['message'];
         $results = $totals['results'];
@@ -78,7 +77,10 @@ class Action implements ObserverInterface
             'message' => $newMessage,
             'results' => $results
         ];
-        $this->logger->info('Frontend action peformed!', ['totals' => $newTotals]);
+        $this->logger->info('Frontend action peformed!', ['totals' => [
+            'status' => $status,
+            'message' => $newMessage
+        ]]);
         $event->setTotals($newTotals);
     }
 }
