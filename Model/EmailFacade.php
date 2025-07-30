@@ -63,7 +63,8 @@ class EmailFacade
             }
             /** @var StoreInterface|Store $store */
             $store = $this->storeManager->getStore();
-            $storeId = $store->getId();
+            $storeCode = $store->getCode();
+            $storeId = 'admin' !== $storeCode ? $store->getId() : $templateVars['store_id'] ?? $store->getId();
             $from = ['email' => $fromEmail, 'name' => $fromName];
             $this->inlineTranslation->suspend();
             $templateOptions = [
